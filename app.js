@@ -4,7 +4,6 @@ var score = document.querySelector('.Score');
 var highscore = document.querySelector('.HighScore');
 let scorecount = 0;
 
-var theme = document.querySelector('.music');
 
 
 const saveToLocalStorage = ()=>{
@@ -169,6 +168,5 @@ addEventListener("click", e =>{
         }
     }
 )
-theme.play();
 
 
