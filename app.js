@@ -57,6 +57,7 @@ class player {
         if(this.losestate==true){
             saveToLocalStorage();
             location.reload();
+            console.log("lost");
             }
         }
     
