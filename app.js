@@ -56,7 +56,7 @@ class player {
     lose(){
         if(this.losestate==true){
             saveToLocalStorage();
-            location.reload();
+            location.reload(true);
             console.log("lost");
             }
         }
@@ -149,8 +149,6 @@ function myFunction() {
     if(scorecount%5==0){
         trap1.speedX+=1;
         trap2.speedX+=1;
-        console.log(trap1.speedX);
-        console.log(trap2.speedX);
     }
   }
 
