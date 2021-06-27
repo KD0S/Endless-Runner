@@ -3,16 +3,23 @@ var ctx = canvas.getContext("2d");
 var score = document.querySelector('.Score');
 var highscore = document.querySelector('.HighScore');
 let scorecount = 0;
-
+let clear;
 
 
 const saveToLocalStorage = ()=>{
     if(scorecount>=localStorage.getItem('Highscore')){
     localStorage.setItem('Highscore',scorecount)
+    highscore.innerHTML = 'Highest Score - '+localStorage.getItem('Highscore')
     }
 }
 
-highscore.innerHTML = 'Highest Score - '+localStorage.getItem('Highscore')
+
+function resetgame(){
+     clearInterval(clear);
+     startgame();
+     animate();
+}
+
 
 class player {
     constructor(){
@@ -21,7 +28,6 @@ class player {
       this.speedX = 0.5;
       this.shouldjump = false;
       this.jumpheight = 140;
-      this.counter = 0;
       this.losestate = false;
     } 
     jump(){
@@ -55,8 +61,8 @@ class player {
     lose(){
         if(this.losestate==true){
             saveToLocalStorage();
-            location.reload(true);
-            console.log("lost");
+            resetgame();
+            console.log(trap1.speedX);
             }
         }
     
@@ -69,10 +75,11 @@ class hole1{
         this.speedX = 4;
       }
       update(){
+           this.draw();
            this.x -= this.speedX;
            if(this.x<-150){
             this.x=canvas.width+80;
-        }
+           }
           }
       
       draw(){
@@ -87,6 +94,7 @@ class hole1{
         this.speedX = 4;
       }
       update(){
+           this.draw();
            this.x -= this.speedX;
            if(this.x<-150){
             this.x=canvas.width+80;
@@ -99,11 +107,6 @@ class hole1{
       }
  }
 
-
-
-const box = new player();
-const trap1 = new hole1();
-const trap2 = new hole2();
 
 
 function loseCondition(){
@@ -122,30 +125,50 @@ ctx.fillStyle = 'rgba(22,22,22,255)';
 ctx.fillRect(0,400,800,200);
 }
 
+var box = new player();
+var trap1 = new hole1();
+var trap2 = new hole2();
+
+function startgame(){
+     box.x = 0;
+     box.y = 340;
+     box.speedX = 0.5;
+     box.shouldjump = false;
+     box.losestate = false;
+     trap1.x =  canvas.width+150;
+     trap1.y = 400;
+     trap1.speedX = 4;
+     trap2.x =  canvas.width+390;
+     trap2.y = 0;
+     trap2.speedX = 4;
+     scorecount = 0;
+     myFunction();
+}
 
 function animate(){
+    let animationId = null;
+    animationId =requestAnimationFrame(animate); 
     ctx.clearRect(0,0,canvas.width,canvas.height);
     drawBackground();
     loseCondition();
     box.draw();
     box.update()
     trap1.update();
-    trap1.draw();
     trap2.update();
-    trap2.draw();
-    requestAnimationFrame(animate);   
+    if(box.losestate==true){
+        cancelAnimationFrame(animationId);
+    } 
     
 }
 function myFunction() {
-    myVar = setInterval(scorefun, 1000);
+    clear = setInterval(scorefun, 1000);
   }
   myFunction()
   
   function scorefun() {
-    
     scorecount++;
     score.innerHTML =' '+scorecount
-    if(scorecount%5==0){
+    if(scorecount%5==0&&scorecount!=0){
         trap1.speedX+=1;
         trap2.speedX+=1;
     }
