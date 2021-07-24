@@ -99,37 +99,9 @@ class hole1{
           ctx.fillRect(this.x,this.y,150,200);
       }
  }
- class obstacle{
-    constructor(){
-        this.x = canvas.width+1000;
-        this.y = 300;
-        this.speedX = 4;
-        this.speedY = 4;
-      }
-      update(){
-           this.draw();
-           this.x -= this.speedX;
-           this.y +=this.speedY;
-           if(this.y+25==340){
-               this.speedY=this.speedY*-1;
-               this.y+=this.speedY;
-           }
-           if(this.y-25==200){
-            this.speedY=this.speedY*-1;
-            this.y+=this.speedY;
-          }
-           if(this.x<-100){
-            this.x=canvas.width+80;
-           }
-          }
-      
-      draw(){
-        ctx.beginPath();
-        ctx.arc(this.x, this.y,25, 0, 2 * Math.PI, false);
-        ctx.fillStyle = 'red';
-        ctx.fill();
-      }
- }
+ 
+ 
+
 
 
 function loseCondition(){
@@ -187,7 +159,6 @@ function animate(){
     box.update()
     trap1.update();
     trap2.update();
-    obs.update();
 }
 
 function myFunction() {
@@ -201,7 +172,6 @@ myFunction()
     if(scorecount%5==0&&scorecount!=0){
         trap1.speedX+=1;
         trap2.speedX+=1;
-        obs.speedX+=1;
     }
   }
 
