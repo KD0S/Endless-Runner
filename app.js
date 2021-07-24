@@ -71,7 +71,7 @@ class hole1{
            this.draw();
            this.x -= this.speedX;
            if(this.x<-150){
-            this.x=canvas.width+80;
+            this.x=canvas.width+200;
            }
           }
       
