@@ -126,7 +126,6 @@ ctx.fillRect(0,400,800,200);
 var box = new player();
 var trap1 = new hole1();
 var trap2 = new hole2();
-var obs = new obstacle();
 
 function startgame(){
      highscore.innerHTML = 'Highest Score - '+localStorage.getItem('Highscore')
@@ -141,10 +140,6 @@ function startgame(){
      trap2.x = canvas.width+450;
      trap2.y = 0;
      trap2.speedX = 4;
-     obs.speedX = 4;
-     obs.speedY = 4;
-     obs.x = canvas.width+1000;
-     obs.y = 300;
      animate();
     
 }
