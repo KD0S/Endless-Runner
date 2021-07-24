@@ -3,21 +3,21 @@ var ctx = canvas.getContext("2d");
 var score = document.querySelector('.Score');
 var highscore = document.querySelector('.HighScore');
 let scorecount = 0;
-let clear;
 
 
+highscore.innerHTML = 'Highest Score - '+localStorage.getItem('Highscore')
 const saveToLocalStorage = ()=>{
     if(scorecount>=localStorage.getItem('Highscore')){
     localStorage.setItem('Highscore',scorecount)
-    highscore.innerHTML = 'Highest Score - '+localStorage.getItem('Highscore')
     }
 }
 
 
 function resetgame(){
-     clearInterval(clear);
-     startgame();
-     animate();
+    saveToLocalStorage();
+    cancelAnimationFrame(animationId);
+    scorecount = 0;
+    startgame();
 }
 
 
@@ -54,17 +54,10 @@ class player {
    
     draw(){
         this.jump();
-        this.lose();
         ctx.fillStyle = 'rgba(37,136,212,255)';
         ctx.fillRect(this.x,this.y,60,60);
     }
-    lose(){
-        if(this.losestate==true){
-            saveToLocalStorage();
-            resetgame();
-            console.log(trap1.speedX);
-            }
-        }
+
     
 }
 
@@ -112,9 +105,12 @@ class hole1{
 function loseCondition(){
     if((box.x+50>trap1.x)&&((box.x+50)<(trap1.x+150))&&box.y+80>trap1.y){
         box.losestate=true;
+        resetgame()
     }
     else if(((box.x+50)>trap2.x)&&((box.x+50)<(trap2.x+150))&&box.y-260<trap2.y){
         box.losestate=true;
+        resetgame()
+       
     }
 }
 
@@ -130,6 +126,7 @@ var trap1 = new hole1();
 var trap2 = new hole2();
 
 function startgame(){
+     highscore.innerHTML = 'Highest Score - '+localStorage.getItem('Highscore')
      box.x = 0;
      box.y = 340;
      box.speedX = 0.5;
@@ -141,12 +138,12 @@ function startgame(){
      trap2.x =  canvas.width+390;
      trap2.y = 0;
      trap2.speedX = 4;
-     scorecount = 0;
-     myFunction();
+     animate();
+    
 }
 
+let animationId = null;
 function animate(){
-    let animationId = null;
     animationId =requestAnimationFrame(animate); 
     ctx.clearRect(0,0,canvas.width,canvas.height);
     drawBackground();
@@ -155,15 +152,12 @@ function animate(){
     box.update()
     trap1.update();
     trap2.update();
-    if(box.losestate==true){
-        cancelAnimationFrame(animationId);
-    } 
-    
 }
+
 function myFunction() {
-    clear = setInterval(scorefun, 1000);
+   setInterval(scorefun,1000);
   }
-  myFunction()
+myFunction()
   
   function scorefun() {
     scorecount++;
