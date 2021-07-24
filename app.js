@@ -71,7 +71,7 @@ class hole1{
            this.draw();
            this.x -= this.speedX;
            if(this.x<-150){
-            this.x=canvas.width+400;
+            this.x=canvas.width+80;
            }
           }
       
@@ -82,7 +82,7 @@ class hole1{
  }
  class hole2{
     constructor(){
-        this.x =  canvas.width+400;
+        this.x =  canvas.width+450;
         this.y = 0;
         this.speedX = 4;
       }
@@ -90,8 +90,7 @@ class hole1{
            this.draw();
            this.x -= this.speedX;
            if(this.x<-150){
-            this.x=canvas.width+80
-;
+            this.x=canvas.width+80;
         }
           }
       
@@ -100,7 +99,37 @@ class hole1{
           ctx.fillRect(this.x,this.y,150,200);
       }
  }
-
+ class obstacle{
+    constructor(){
+        this.x = canvas.width+1000;
+        this.y = 300;
+        this.speedX = 4;
+        this.speedY = 4;
+      }
+      update(){
+           this.draw();
+           this.x -= this.speedX;
+           this.y +=this.speedY;
+           if(this.y+25==340){
+               this.speedY=this.speedY*-1;
+               this.y+=this.speedY;
+           }
+           if(this.y-25==200){
+            this.speedY=this.speedY*-1;
+            this.y+=this.speedY;
+          }
+           if(this.x<-100){
+            this.x=canvas.width+80;
+           }
+          }
+      
+      draw(){
+        ctx.beginPath();
+        ctx.arc(this.x, this.y,25, 0, 2 * Math.PI, false);
+        ctx.fillStyle = 'red';
+        ctx.fill();
+      }
+ }
 
 
 function loseCondition(){
@@ -125,6 +154,7 @@ ctx.fillRect(0,400,800,200);
 var box = new player();
 var trap1 = new hole1();
 var trap2 = new hole2();
+var obs = new obstacle();
 
 function startgame(){
      highscore.innerHTML = 'Highest Score - '+localStorage.getItem('Highscore')
@@ -136,9 +166,13 @@ function startgame(){
      trap1.x =  canvas.width+150;
      trap1.y = 400;
      trap1.speedX = 4;
-     trap2.x =  canvas.width+390;
+     trap2.x = canvas.width+450;
      trap2.y = 0;
      trap2.speedX = 4;
+     obs.speedX = 4;
+     obs.speedY = 4;
+     obs.x = canvas.width+1000;
+     obs.y = 300;
      animate();
     
 }
@@ -153,6 +187,7 @@ function animate(){
     box.update()
     trap1.update();
     trap2.update();
+    obs.update();
 }
 
 function myFunction() {
@@ -166,6 +201,7 @@ myFunction()
     if(scorecount%5==0&&scorecount!=0){
         trap1.speedX+=1;
         trap2.speedX+=1;
+        obs.speedX+=1;
     }
   }
 
@@ -186,5 +222,3 @@ addEventListener("click", e =>{
         }
     }
 )
-
-
