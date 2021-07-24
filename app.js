@@ -71,7 +71,7 @@ class hole1{
            this.draw();
            this.x -= this.speedX;
            if(this.x<-150){
-            this.x=canvas.width+80;
+            this.x=canvas.width+150;
            }
           }
       
@@ -82,7 +82,7 @@ class hole1{
  }
  class hole2{
     constructor(){
-        this.x =  canvas.width+390;
+        this.x =  canvas.width+400;
         this.y = 0;
         this.speedX = 4;
       }
@@ -90,7 +90,8 @@ class hole1{
            this.draw();
            this.x -= this.speedX;
            if(this.x<-150){
-            this.x=canvas.width+80;
+            this.x=canvas.width+1
+;
         }
           }
       
